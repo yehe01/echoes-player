@@ -5,6 +5,7 @@ import { AppPlayerApi } from '../../core/api/app-player.api';
 
 import { fadeInAnimation } from '../../shared/animations/fade-in.animation';
 import { PlayerSearchService } from '../../core/services/player-search.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'youtube-playlists',
@@ -44,12 +45,19 @@ export class YoutubePlaylistsComponent implements OnInit {
 
   constructor(
     private playerSearchService: PlayerSearchService,
-    private appPlayerApi: AppPlayerApi
+    private appPlayerApi: AppPlayerApi,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.params.subscribe((p: any) => {
+      this.playerSearchService.updateSearchType(p.type || CSearchTypes.PLAYLIST);
+      this.playerSearchService.updateQueryParam(p.params);
+      this.playerSearchService.updateQueryAction(p.query || '');
+    });
+
     // this.store.dispatch(this.playerSearchActions.updateSearchType(CSearchTypes.PLAYLIST));
-    this.playerSearchService.updateSearchType(CSearchTypes.PLAYLIST);
+    // this.playerSearchService.updateSearchType(CSearchTypes.PLAYLIST);
 
     // this.store.dispatch(PlayerSearchActions.PLAYLISTS_SEARCH_START.creator());
     this.playerSearchService.searchCurrentQuery();

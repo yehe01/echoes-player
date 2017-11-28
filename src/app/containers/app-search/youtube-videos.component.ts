@@ -14,6 +14,7 @@ import { getPlaylistVideos$ } from '../../core/store/now-playlist';
 import { getIsSearching$ } from '../../core/store/player-search';
 import { PlayerSearchService } from "../../core/services/player-search.service";
 import { NowPlaylistService } from '../../core/services/now-playlist.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'youtube-videos',
@@ -42,16 +43,24 @@ export class YoutubeVideosComponent implements OnInit {
   constructor(
     private appPlayerApi: AppPlayerApi,
     private nowPlaylistService: NowPlaylistService,
-    private playerSearchService: PlayerSearchService
+    private playerSearchService: PlayerSearchService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     // this.store.dispatch(this.playerSearchActions.updateSearchType(CSearchTypes.VIDEO));
-    this.playerSearchService.updateSearchType(CSearchTypes.VIDEO);
+    // this.playerSearchService.updateSearchType(CSearchTypes.VIDEO);
+    this.route.queryParams.subscribe((p: any) => {
+      this.playerSearchService.updateSearchType(p.type || CSearchTypes.VIDEO);
+      // this.playerSearchService.updateQueryParam(p.params);
+      this.playerSearchService.updateQueryAction(p.query || '');
+      console.log(p);
 
+    });
 
+    console.log('12');
     // this.store.dispatch(this.playerSearchActions.searchCurrentQuery());
-    this.playerSearchService.searchCurrentQuery();
+    // this.playerSearchService.searchCurrentQuery();
   }
 
   playSelectedVideo(media: GoogleApiYouTubeVideoResource) {
