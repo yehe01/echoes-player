@@ -10,7 +10,7 @@ export class PlaylistResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<GoogleApiYouTubePlaylistResource> {
     const playlistId = route.params['id'];
-    return this.youtubeApiService.getPlaylist(playlistId)
+    return this.youtubeApiService.fetchPlaylist(playlistId)
       .map(response => response.items[0]);
   }
 }

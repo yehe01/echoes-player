@@ -61,14 +61,8 @@ export class YoutubeApi {
     }
   };
 
-  isSearching = false;
-
   constructor(private http: Http,
               private authService?: Authorization) {
-  }
-
-  hasToken(): boolean {
-    return this.authService && this.authService.accessToken.length > 0;
   }
 
   fetchPlaylistItems(playlistId: string, pageToken?) {
@@ -111,18 +105,6 @@ export class YoutubeApi {
     return items$.take(1);
   }
 
-  // remove, not general at all
-  defaaultConfig() {
-    const config = new URLSearchParams();
-
-    config.set('part', 'snippet,contentDetails');
-    config.set('key', YOUTUBE_API_KEY);
-    config.set('maxResults', '50');
-    config.set('pageToken', '');
-
-    return config;
-  }
-
   fetchAllPlaylists() {
     let items = [];
     const subscriptions: Subscription[] = [];
@@ -158,40 +140,28 @@ export class YoutubeApi {
     return items$.take(1);
   }
 
-  getPlaylists(pageToken?: string) {
-    const apiOptions = this.playlistsOptions;
+  fetchPlaylist(id) {
+    const options = this.playlistOptions;
 
     const config = this.defaaultConfig();
+    let idKey;
 
-    if (pageToken) {
-      config.set('pageToken', pageToken);
-    } else {
-      config.delete('pageToken');
+    idKey = options.idKey || '';
+    if (options.config) {
+      this.mergeParams(options.config, config);
     }
 
-    let url;
-
-    if (apiOptions) {
-      url = apiOptions.url;
-      if (apiOptions.config) {
-        this.mergeParams(apiOptions.config, config);
-      }
+    if (idKey) {
+      config.set(idKey, id);
     }
 
-    const options: RequestOptionsArgs = {
+    const _options: RequestOptionsArgs = {
       search: config,
       headers: this.createHeaders()
     };
 
-    return this.http.get(url, options)
-      .map(response => {
-        this.isSearching = false;
-        return response.json();
-      });
-  }
-
-  getPlaylist(id) {
-    return this.list(id, this.playlistOptions);
+    return this.http.get(options.url, _options)
+      .map(response => response.json());
   }
 
   search(api: string, options) {
@@ -238,11 +208,7 @@ export class YoutubeApi {
     };
 
     return this.http.get(options.url, _options)
-      .map(response => response.json())
-      .map(response => {
-        this.isSearching = false;
-        return response;
-      });
+      .map(response => response.json());
   }
 
   fetchVideoData(mediaId: string) {
@@ -254,7 +220,7 @@ export class YoutubeApi {
     return this.getVideos(mediaIds);
   }
 
-  getVideos(id) {
+  private getVideos(id) {
     const options = this.videosOptions;
 
     const config = this.defaaultConfig();
@@ -272,24 +238,24 @@ export class YoutubeApi {
       .map(res => res.json().items);
   }
 
-  private mergeParams(source, target: URLSearchParams) {
-    Object.keys(source)
-      .forEach(param => target.set(param, source[param]));
-  }
+  private getPlaylists(pageToken?: string) {
+    const apiOptions = this.playlistsOptions;
 
-  private list(id, apiOptions) {
     const config = this.defaaultConfig();
-    let idKey;
+
+    if (pageToken) {
+      config.set('pageToken', pageToken);
+    } else {
+      config.delete('pageToken');
+    }
+
+    let url;
 
     if (apiOptions) {
-      idKey = apiOptions.idKey || '';
+      url = apiOptions.url;
       if (apiOptions.config) {
         this.mergeParams(apiOptions.config, config);
       }
-    }
-
-    if (idKey) {
-      config.set(idKey, id);
     }
 
     const options: RequestOptionsArgs = {
@@ -297,12 +263,24 @@ export class YoutubeApi {
       headers: this.createHeaders()
     };
 
-    return this.http.get(apiOptions.url, options)
-      .map(response => response.json())
-      .map(response => {
-        this.isSearching = false;
-        return response;
-      });
+    return this.http.get(url, options)
+      .map(response => response.json());
+  }
+
+  private defaaultConfig() {
+    const config = new URLSearchParams();
+
+    config.set('part', 'snippet,contentDetails');
+    config.set('key', YOUTUBE_API_KEY);
+    config.set('maxResults', '50');
+    config.set('pageToken', '');
+
+    return config;
+  }
+
+  private mergeParams(source, target: URLSearchParams) {
+    Object.keys(source)
+      .forEach(param => target.set(param, source[param]));
   }
 
   private createHeaders(addAuth = true) {

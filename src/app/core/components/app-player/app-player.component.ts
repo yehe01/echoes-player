@@ -43,13 +43,6 @@ import { AppPlayerService } from '../../services/app-player.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppPlayerComponent implements OnInit {
-  // player$ = this.store.let(AppPlayer.getPlayer$);
-  // media$ = this.store.let(AppPlayer.getCurrentMedia$);
-  // isPlayerPlaying$ = this.store.let(AppPlayer.getIsPlayerPlaying$);
-  // isPlayerFullscreen$ = this.store.let(AppPlayer.getPlayerFullscreen$);
-  // isShowPlayer$ = this.store.let(AppPlayer.getShowPlayer$);
-  // isPlayerInRepeat$ = this.store.let(isPlayerInRepeat$);
-
   media$ = this.appPlayerService.appPlayer.map(p => p.media);
   player$ = this.appPlayerService.appPlayer;
   isPlayerPlaying$ = this.appPlayerService.appPlayer.map(p => p.playerState)
@@ -68,9 +61,7 @@ export class AppPlayerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.store.dispatch(new AppPlayer.Reset());
     this.appPlayerService.reset();
-    // this.nowPlaylistEffects.loadNextTrack$.subscribe(action => this.playVideo(action.payload));
   }
 
   setupPlayer(player) {
@@ -80,11 +71,9 @@ export class AppPlayerComponent implements OnInit {
   updatePlayerState(event) {
     this.playerService.onPlayerStateChange(event);
 
-    // moved from youtube player service
     this.appPlayerService.updateState(event.data);
 
     if (event.data === YT.PlayerState.ENDED) {
-      // this.store.dispatch(this.playerActions.loadNextTrack());
       this.nowPlaylistService.trackEnded();
       this.nowPlaylistService.playlist$.map(nowPlaylist => {
         const selectedId = nowPlaylist.selectedId;

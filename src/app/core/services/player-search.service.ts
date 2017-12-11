@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CPresetTypes, CSearchTypes, IPlayerSearch } from '../models/player-search';
-import { YoutubeSearchService } from './youtube.search';
+import { YoutubeSearchApi } from '../api/youtube-search.api';
 import { Subscriber } from 'rxjs/Subscriber';
 import { YoutubeApi } from '../api/youtube-api';
 
@@ -34,10 +34,9 @@ export class PlayerSearchService {
 
   private playerSearchSubject: BehaviorSubject<IPlayerSearch>;
 
-  constructor(private youtubeSearch: YoutubeSearchService, private youtubeApi: YoutubeApi) {
+  constructor(private youtubeSearch: YoutubeSearchApi, private youtubeApi: YoutubeApi) {
     this.playerSearchSubject = new BehaviorSubject(INIT_STATE);
     this.playerSearch$ = this.playerSearchSubject.asObservable();
-
   }
 
   updateSearchType(searchType: string) {
@@ -60,8 +59,7 @@ export class PlayerSearchService {
 
     if (newPlayerSearch.searchType === CSearchTypes.VIDEO) {
 
-      this.youtubeSearch.resetPageToken()
-        .searchFor(newPlayerSearch.searchType, newPlayerSearch.query, newPlayerSearch.queryParams)
+      this.youtubeSearch.searchFor(newPlayerSearch.searchType, newPlayerSearch.query, '', newPlayerSearch.queryParams)
         .do((youtubeResponse) => {
           const { nextPageToken, prevPageToken } = youtubeResponse;
           const statePageToken = newPlayerSearch.pageToken;
@@ -78,10 +76,9 @@ export class PlayerSearchService {
         .subscribe(this.createAddVideosHandler());
       // .catch((err) => Observable.of(this.playerSearchActions.errorInSearch(err)))
     } else {
-      this.youtubeSearch.resetPageToken()
-        .searchFor(
+      this.youtubeSearch.searchFor(
           newPlayerSearch.searchType,
-          newPlayerSearch.query,
+          newPlayerSearch.query, '',
           newPlayerSearch.queryParams,
         )
         .do(youtubeResponse => {
@@ -99,10 +96,6 @@ export class PlayerSearchService {
     }
   }
 
-  resetPageToken() {
-    this.youtubeSearch.resetPageToken();
-  }
-
   updateQueryAction(query: string) {
     this.playerSearchSubject.next({
       ...this.playerSearchSubject.getValue(), query
@@ -116,10 +109,10 @@ export class PlayerSearchService {
 
       // todo: refactor
       if (search.searchType === CSearchTypes.VIDEO) {
-        this.youtubeSearch.searchMore(search.pageToken.next)
-          .searchFor(
+        this.youtubeSearch.searchFor(
             search.searchType,
             search.query,
+            search.pageToken.next,
             search.queryParams,
           )
           .do(youtubeResponse => {
@@ -136,10 +129,10 @@ export class PlayerSearchService {
           .mergeMap((mediaIds: string) => this.youtubeApi.fetchVideosData(mediaIds))
           .subscribe(this.createAddVideosHandler());
       } else {
-        this.youtubeSearch.searchMore(search.pageToken.next)
-          .searchFor(
+        this.youtubeSearch.searchFor(
             search.searchType,
             search.query,
+            search.pageToken.next,
             search.queryParams,
           )
           .do(youtubeResponse => {

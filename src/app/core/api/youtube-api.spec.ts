@@ -60,11 +60,4 @@
 //     expect(actual).toHaveBeenCalledTimes(expected);
 //   });
 //
-//   it('should check that the token exists', () => {
-//     const token = 'fake token';
-//     const service = new YoutubeApi({}, authSpy);
-//     const actual = service.hasToken();
-//     expect(actual).toBeTruthy();
-//   });
-//
 // });

@@ -34,16 +34,12 @@ import { UserProfile } from '../../core/services';
     `
 })
 export class AppSearchComponent implements OnInit {
-  // query$ = this.store.let(getQuery$);
   query$ = this.playerSearchService.playerSearch$.map(search => search.query);
 
-  // currentPlaylist$ = this.store.let(getUserViewPlaylist$);
   currentPlaylist$ = this.userProfile.userProfile$.map(user => user.viewedPlaylist);
 
-  // queryParamPreset$ = this.store.let(getQueryParamPreset$);
   queryParamPreset$ = this.playerSearchService.playerSearch$.map(search => search.queryParams.preset);
 
-  // presets$ = this.store.let(getPresets$);
   presets$ = this.playerSearchService.playerSearch$.map(search => search.presets);
 
   constructor(
@@ -55,26 +51,19 @@ export class AppSearchComponent implements OnInit {
   ngOnInit() {}
 
   search (query: string) {
-    // this.store.dispatch(this.playerSearchActions.searchNewQuery(query));
     this.playerSearchService.searchNewQuery(query);
   }
 
   resetPageToken(query: string) {
-    // this.store.dispatch(this.playerSearchActions.resetPageToken());
-    this.playerSearchService.resetPageToken();
-
-    // this.store.dispatch(new UpdateQueryAction(query));
     this.playerSearchService.updateQueryAction(query);
 
   }
 
   searchMore () {
-    // this.store.dispatch(this.playerSearchActions.searchMoreForQuery());
     this.playerSearchService.searchMoreForQuery();
   }
 
   updatePreset(preset: IPresetParam) {
-    // this.store.dispatch(this.playerSearchActions.updateQueryParam({ preset: preset.value }));
     this.playerSearchService.updateQueryParam({ preset: preset.value });
 
   }
