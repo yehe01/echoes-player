@@ -31,7 +31,6 @@ export const APP_SERVICES = [
   { provide: YoutubeVideosInfo, useClass: YoutubeVideosInfo },
   { provide: GapiLoader, useClass: GapiLoader },
   { provide: Authorization, useClass: Authorization },
-  { provide: YoutubeDataApi, useClass: YoutubeDataApi },
   { provide: YoutubeApiService, useClass: YoutubeApiService },
   { provide: AppLayoutService, useClass: AppLayoutService },
   { provide: PlayerSearchService, useClass: PlayerSearchService },

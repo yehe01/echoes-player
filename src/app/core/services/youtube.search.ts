@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { YoutubeDataApi, DataApiProviders } from './youtube-data-api';
+import { DataApiProviders } from './youtube-data-api';
+import { YoutubeApiService } from './youtube-api.service';
 
 const SearchTypes = {
   VIDEO: 'video',
@@ -26,7 +27,7 @@ export class YoutubeSearch {
   };
 
   constructor(
-    private youtubeDataApi: YoutubeDataApi
+    private youtubeApiService: YoutubeApiService
     ) { }
 
   /**
@@ -39,7 +40,7 @@ export class YoutubeSearch {
       const preset = params ? ` ${params.preset}` : '';
       this._apiOptions.q = `${query}${preset}`;
     }
-    return this.youtubeDataApi.list(this._api, this._apiOptions);
+    return this.youtubeApiService.search(this._api, this._apiOptions);
   }
 
   /**
@@ -82,7 +83,7 @@ export class YoutubeSearch {
           part: 'snippet,id,contentDetails',
           id: response.items.map(pl => pl.id.playlistId).join(',')
         };
-        return this.youtubeDataApi.list(DataApiProviders.PLAYLISTS, options);
+        return this.youtubeApiService.search(DataApiProviders.PLAYLISTS, options);
       });
   }
 

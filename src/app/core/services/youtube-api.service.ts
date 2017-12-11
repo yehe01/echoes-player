@@ -44,9 +44,25 @@ export class YoutubeApiService {
     }
   };
 
+  private videosOptions: YoutubeApiServiceOptions = {
+    url: 'https://www.googleapis.com/youtube/v3/videos',
+    idKey: 'id',
+    config: {
+      part: 'snippet,contentDetails,statistics'
+    }
+  };
+
+  private searchOptions: YoutubeApiServiceOptions = {
+    url: 'https://www.googleapis.com/youtube/v3',
+    config: {
+      part: 'snippet,id',
+      maxResults: '50',
+      key: YOUTUBE_API_KEY
+    }
+  };
+
   isSearching = false;
 
-  // constructor(options: YoutubeApiServiceOptions, private authService?: Authorization) {
   constructor(private http: Http,
               private authService?: Authorization) {
   }
@@ -95,6 +111,7 @@ export class YoutubeApiService {
     return items$.take(1);
   }
 
+  // remove, not general at all
   defaaultConfig() {
     const config = new URLSearchParams();
 
@@ -157,7 +174,7 @@ export class YoutubeApiService {
     if (apiOptions) {
       url = apiOptions.url;
       if (apiOptions.config) {
-         this.mergeParams(apiOptions.config, config);
+        this.mergeParams(apiOptions.config, config);
       }
     }
 
@@ -177,18 +194,32 @@ export class YoutubeApiService {
     return this.list(id, this.playlistOptions);
   }
 
+  search(api: string, options) {
+    const config = new URLSearchParams();
+    if (this.searchOptions.config) {
+      this.mergeParams(this.searchOptions.config, config);
+    }
+
+    this.mergeParams(options, config);
+
+    const _options: RequestOptionsArgs = {
+      search: config,
+      headers: this.createHeaders(false)
+    };
+
+    const url = `${this.searchOptions.url}/${api}`;
+    return this.http.get(url, _options)
+      .map(response => response.json());
+  }
+
   private getPlaylistItems(playlistId: string, pageToken?: string) {
-    const apiOptions = this.playlistInfoOptions;
+    const options = this.playlistInfoOptions;
     const config = this.defaaultConfig();
     let idKey;
-    let url;
 
-    if (apiOptions) {
-      url = apiOptions.url;
-      idKey = apiOptions.idKey || '';
-      if (apiOptions.config) {
-        this.mergeParams(apiOptions.config, config);
-      }
+    idKey = options.idKey || '';
+    if (options.config) {
+      this.mergeParams(options.config, config);
     }
 
     if (idKey) {
@@ -201,12 +232,12 @@ export class YoutubeApiService {
       config.delete('pageToken');
     }
 
-    const options: RequestOptionsArgs = {
+    const _options: RequestOptionsArgs = {
       search: config,
       headers: this.createHeaders()
     };
 
-    return this.http.get(url, options)
+    return this.http.get(options.url, _options)
       .map(response => response.json())
       .map(response => {
         this.isSearching = false;
@@ -215,34 +246,24 @@ export class YoutubeApiService {
   }
 
   getVideos(id) {
-    const apiOptions = {
-      url: 'https://www.googleapis.com/youtube/v3/videos',
-      idKey: 'id',
-      config: {
-        part: 'snippet,contentDetails,statistics'
-      }
-    };
+    const options = this.videosOptions;
 
     const config = this.defaaultConfig();
     let idKey;
-    let url;
 
-    if (apiOptions) {
-      url = apiOptions.url;
-      idKey = apiOptions.idKey || '';
-      if (apiOptions.config) {
-        this.mergeParams(apiOptions.config, config);
-      }
+    idKey = options.idKey || '';
+    if (options.config) {
+      this.mergeParams(options.config, config);
     }
 
     const videoId = id.videoId || id;
     config.set(idKey, videoId);
 
-    return this.http.get(url, { search: config })
+    return this.http.get(options.url, { search: config })
       .map(res => res.json().items);
   }
 
-  private mergeParams (source, target: URLSearchParams) {
+  private mergeParams(source, target: URLSearchParams) {
     Object.keys(source)
       .forEach(param => target.set(param, source[param]));
   }
@@ -250,10 +271,8 @@ export class YoutubeApiService {
   private list(id, apiOptions) {
     const config = this.defaaultConfig();
     let idKey;
-    let url;
 
     if (apiOptions) {
-      url = apiOptions.url;
       idKey = apiOptions.idKey || '';
       if (apiOptions.config) {
         this.mergeParams(apiOptions.config, config);
@@ -269,7 +288,7 @@ export class YoutubeApiService {
       headers: this.createHeaders()
     };
 
-    return this.http.get(url, options)
+    return this.http.get(apiOptions.url, options)
       .map(response => response.json())
       .map(response => {
         this.isSearching = false;
@@ -277,10 +296,10 @@ export class YoutubeApiService {
       });
   }
 
-  private createHeaders() {
+  private createHeaders(addAuth = true) {
     const accessToken = this.authService && this.authService.accessToken;
     const headersOptions = {};
-    if (accessToken) {
+    if (accessToken && addAuth) {
       headersOptions['authorization'] = `Bearer ${accessToken}`;
     }
     return new Headers(headersOptions);
