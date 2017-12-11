@@ -100,7 +100,6 @@ export class AppPlayerComponent implements OnInit {
   }
 
   playVideo(media: GoogleApiYouTubeVideoResource) {
-    // this.store.dispatch(new AppPlayer.PlayVideo(media));
     this.appPlayerService.play(media);
   }
 
@@ -109,25 +108,21 @@ export class AppPlayerComponent implements OnInit {
   }
 
   togglePlayer() {
-    // this.playerService.togglePlayer();
     this.appPlayerService.togglePlayer();
   }
 
   toggleFullScreen() {
-    // this.store.dispatch(new AppPlayer.FullScreen());
     this.appPlayerService.fullScreen();
   }
 
   playNextTrack() {
     this.nowPlaylistService.selectNextIndex();
     this.appPlayerService.play(this.nowPlaylistService.getCurrent());
-    // this.store.dispatch(new AppPlayer.PlayVideo(this.nowPlaylistService.getCurrent()));
   }
 
   playPreviousTrack() {
     this.nowPlaylistService.selectPreviousIndex();
     this.appPlayerService.play(this.nowPlaylistService.getCurrent());
-    // this.store.dispatch(new AppPlayer.PlayVideo(this.nowPlaylistService.getCurrent()));
   }
 
   isLastIndex() {

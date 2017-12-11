@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { NowPlaylistService } from '../services';
-import { AppPlayerService } from '../services/app-player.service';
-import { YoutubeApiService } from '../services/youtube-api.service';
+import { NowPlaylistService } from './index';
+import { AppPlayerService } from './app-player.service';
+import { YoutubeApi } from '../api/youtube-api';
 
 @Injectable()
-export class AppPlayerApi {
+export class AppService {
   constructor(private nowPlaylistService: NowPlaylistService,
               private appPlayerService: AppPlayerService,
-              private youtubeApiService: YoutubeApiService) {
+              private youtubeApiService: YoutubeApi) {
   }
 
   playPlaylist(playlist: GoogleApiYouTubePlaylistResource) {

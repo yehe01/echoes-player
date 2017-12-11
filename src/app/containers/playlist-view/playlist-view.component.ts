@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { NowPlaylistService } from '../../core/services/now-playlist.service';
 import { AppApi } from '../../core/api/app.api';
-import { AppPlayerApi } from '../../core/api/app-player.api';
+import { AppService } from '../../core/services/app.service';
 
 export interface PlaylistData {
   videos: GoogleApiYouTubeVideoResource[];
@@ -47,7 +47,7 @@ export class PlaylistViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private nowPlaylistService: NowPlaylistService,
-              private appPlayerApi: AppPlayerApi,
+              private appPlayerApi: AppService,
               private appApi: AppApi) { }
 
   ngOnInit() { }

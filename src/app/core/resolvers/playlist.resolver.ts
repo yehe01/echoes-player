@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { YoutubeApiService } from '../services/youtube-api.service';
+import { YoutubeApi } from '../api/youtube-api';
 
 @Injectable()
 export class PlaylistResolver implements Resolve<any> {
-  constructor(private youtubeApiService: YoutubeApiService) {
+  constructor(private youtubeApiService: YoutubeApi) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<GoogleApiYouTubePlaylistResource> {

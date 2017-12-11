@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataApiProviders } from './youtube-data-api';
-import { YoutubeApiService } from './youtube-api.service';
+import { YoutubeApi } from '../api/youtube-api';
 
 const SearchTypes = {
   VIDEO: 'video',
@@ -17,7 +17,7 @@ export const SearchParams = {
 };
 
 @Injectable()
-export class YoutubeSearch {
+export class YoutubeSearchService {
   private _api = DataApiProviders.SEARCH;
   private _apiOptions = {
     part: 'snippet,id',
@@ -27,7 +27,7 @@ export class YoutubeSearch {
   };
 
   constructor(
-    private youtubeApiService: YoutubeApiService
+    private youtubeApiService: YoutubeApi
     ) { }
 
   /**

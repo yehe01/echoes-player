@@ -5,7 +5,7 @@ import 'rxjs/add/operator/buffer';
 import 'rxjs/add/operator/catch';
 import { of } from 'rxjs/observable/of';
 
-import { YoutubeApiService } from './youtube-api.service';
+import { YoutubeApi } from '../api/youtube-api';
 import { Authorization } from './authorization.service';
 
 import { GoogleBasicProfile, IUserProfile } from '../models/user-profile';
@@ -26,7 +26,7 @@ export class UserProfile {
   private userProfileSubject: BehaviorSubject<IUserProfile>;
 
   constructor(private zone: NgZone,
-              public youtubeApiService: YoutubeApiService,
+              public youtubeApiService: YoutubeApi,
               private authorization: Authorization,
               private localStorage: AsyncLocalStorage) {
 

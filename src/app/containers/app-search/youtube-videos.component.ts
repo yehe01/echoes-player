@@ -1,7 +1,7 @@
 import { CSearchTypes } from '../../core/models/player-search';
 import { Component, OnInit } from '@angular/core';
 
-import { AppPlayerApi } from '../../core/api/app-player.api';
+import { AppService } from '../../core/services/app.service';
 
 import { PlayerSearchService } from '../../core/services/player-search.service';
 import { NowPlaylistService } from '../../core/services';
@@ -31,7 +31,7 @@ export class YoutubeVideosComponent implements OnInit {
   playlistVideos$ = this.nowPlaylistService.playlist$.map(p => p.videos);
 
   constructor(
-    private appPlayerApi: AppPlayerApi,
+    private appPlayerApi: AppService,
     private nowPlaylistService: NowPlaylistService,
     private playerSearchService: PlayerSearchService
   ) {}

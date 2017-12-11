@@ -1,7 +1,7 @@
 import { Headers, Http, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { YOUTUBE_API_KEY } from './constants';
-import { Authorization } from './authorization.service';
+import { YOUTUBE_API_KEY } from '../services/constants';
+import { Authorization } from '../services/authorization.service';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
@@ -19,7 +19,7 @@ interface YoutubeApiServiceOptions {
 
 
 @Injectable()
-export class YoutubeApiService {
+export class YoutubeApi {
   private playlistInfoOptions: YoutubeApiServiceOptions = {
     url: 'https://www.googleapis.com/youtube/v3/playlistItems',
     idKey: 'playlistId',
@@ -243,6 +243,15 @@ export class YoutubeApiService {
         this.isSearching = false;
         return response;
       });
+  }
+
+  fetchVideoData(mediaId: string) {
+    return this.getVideos(mediaId)
+      .map(items => items[0]);
+  }
+
+  fetchVideosData(mediaIds: string) {
+    return this.getVideos(mediaIds);
   }
 
   getVideos(id) {

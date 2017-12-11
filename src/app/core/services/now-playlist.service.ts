@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as NowPlaylist from '../models/now-playlist';
-import { YoutubeVideosInfo } from './youtube-videos-info.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { INowPlaylist } from '../models/now-playlist';
 import { MediaParserService } from './media-parser.service';
 import { YoutubePlayerService } from './youtube-player.service';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
+import { YoutubeApi } from '../api/youtube-api';
 
 const INIT_STATE: INowPlaylist = {
   videos: [],
@@ -22,7 +22,7 @@ export class NowPlaylistService {
   private playlistSubject: BehaviorSubject<INowPlaylist>;
 
 
-  constructor(private youtubeVideosInfo: YoutubeVideosInfo,
+  constructor(private youtubeApi: YoutubeApi,
               private mediaParser: MediaParserService,
               private playerService: YoutubePlayerService,
               private localStorage: AsyncLocalStorage) {
@@ -130,13 +130,10 @@ export class NowPlaylistService {
 
   // ???
   queueVideo(mediaId: string) {
-    return this.youtubeVideosInfo.api.getVideos(mediaId).map(items => items[0]);
+    return this.youtubeApi.fetchVideosData(mediaId);
   }
 
   queueVideo2(media) {
-    // case NowPlaylistActions.QUEUE:
-    //   return { ...state, videos: addMedia(state.videos, action.payload) };
-
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -146,7 +143,6 @@ export class NowPlaylistService {
   }
 
   queueVideos(medias: GoogleApiYouTubeVideoResource[]) {
-    // this.store.dispatch(new NowPlaylist.QueueVideos(medias));
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({

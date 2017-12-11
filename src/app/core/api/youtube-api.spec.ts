@@ -4,9 +4,9 @@
 //  */
 // import { TestBed, async, inject } from '@angular/core/testing';
 // import { Http } from '@angular/http';
-// import { YoutubeApiService } from './youtube-api.service';
+// import { YoutubeApi } from './youtube-api.service';
 //
-// describe('YoutubeApiService', () => {
+// describe('YoutubeApi', () => {
 //   let authSpy;
 //
 //   beforeEach(() => {
@@ -15,8 +15,8 @@
 //   });
 //
 //   // it('should reset config when instansiated', () => {
-//   //   spyOn(YoutubeApiService.prototype, 'resetConfig').and.callThrough();
-//   //   const service = new YoutubeApiService({}, authSpy);
+//   //   spyOn(YoutubeApi.prototype, 'resetConfig').and.callThrough();
+//   //   const service = new YoutubeApi({}, authSpy);
 //   //   const actual = service.resetConfig;
 //   //   const expected = 1;
 //   //   expect(actual).toHaveBeenCalledTimes(expected);
@@ -25,7 +25,7 @@
 //
 //   it('should create authorization header when accessToken exists', () => {
 //     const token = 'mocked-token-for-test';
-//     const service = new YoutubeApiService({}, authSpy);
+//     const service = new YoutubeApi({}, authSpy);
 //     authSpy.accessToken = token;
 //     const actual = service.createHeaders();
 //     const expected = 'authorization';
@@ -39,13 +39,13 @@
 //       http: {},
 //       idKey: 'mocked-idkey'
 //     };
-//     const service = new YoutubeApiService(options, authSpy);
+//     const service = new YoutubeApi(options, authSpy);
 //     expect(service.url).toMatch(options.url);
 //     expect(service.idKey).toMatch(options.idKey);
 //   });
 //
 //   it('should set configuration when instansiated', () => {
-//     spyOn(YoutubeApiService.prototype, 'setConfig').and.callThrough();
+//     spyOn(YoutubeApi.prototype, 'setConfig').and.callThrough();
 //     const options = {
 //       url: 'mocked-url',
 //       http: {},
@@ -54,7 +54,7 @@
 //         mine: 'true'
 //       }
 //     };
-//     const service = new YoutubeApiService(options, authSpy);
+//     const service = new YoutubeApi(options, authSpy);
 //     const actual = service.setConfig;
 //     const expected = 1;
 //     expect(actual).toHaveBeenCalledTimes(expected);
@@ -62,7 +62,7 @@
 //
 //   it('should check that the token exists', () => {
 //     const token = 'fake token';
-//     const service = new YoutubeApiService({}, authSpy);
+//     const service = new YoutubeApi({}, authSpy);
 //     const actual = service.hasToken();
 //     expect(actual).toBeTruthy();
 //   });

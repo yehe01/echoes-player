@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CPresetTypes, CSearchTypes, IPlayerSearch } from '../models/player-search';
-import { YoutubeSearch } from './youtube.search';
-import { YoutubeVideosInfo } from './youtube-videos-info.service';
+import { YoutubeSearchService } from './youtube.search';
 import { Subscriber } from 'rxjs/Subscriber';
+import { YoutubeApi } from '../api/youtube-api';
 
 const INIT_STATE: IPlayerSearch = {
   query: '',
@@ -34,7 +34,7 @@ export class PlayerSearchService {
 
   private playerSearchSubject: BehaviorSubject<IPlayerSearch>;
 
-  constructor(private youtubeSearch: YoutubeSearch, private youtubeVideosInfo: YoutubeVideosInfo) {
+  constructor(private youtubeSearch: YoutubeSearchService, private youtubeApi: YoutubeApi) {
     this.playerSearchSubject = new BehaviorSubject(INIT_STATE);
     this.playerSearch$ = this.playerSearchSubject.asObservable();
 
@@ -74,7 +74,7 @@ export class PlayerSearchService {
           this.playerSearchSubject.next(newPlayerSearch);
         })
         .map((medias: { items: GoogleApiYouTubeSearchResource[] }) => medias.items.map(media => media.id.videoId).join(','))
-        .mergeMap((mediaIds: string) => this.youtubeVideosInfo.fetchVideosData(mediaIds))
+        .mergeMap((mediaIds: string) => this.youtubeApi.fetchVideosData(mediaIds))
         .subscribe(this.createAddVideosHandler());
       // .catch((err) => Observable.of(this.playerSearchActions.errorInSearch(err)))
     } else {
@@ -100,12 +100,6 @@ export class PlayerSearchService {
   }
 
   resetPageToken() {
-    // @Effect()
-    //   resetPageToken$ = this.actions$
-    //     .ofType(PlayerSearchActions.RESET_PAGE_TOKEN)
-    //     .map(toPayload)
-    //     .mergeMap(() => Observable.of(this.youtubeSearch.resetPageToken()))
-    //     .map(() => ({ type: 'PAGE_RESET_DONE' }));
     this.youtubeSearch.resetPageToken();
   }
 
@@ -116,23 +110,6 @@ export class PlayerSearchService {
   }
 
   searchMoreForQuery() {
-    // @Effect()
-    //   searchMoreForQuery$ = this.actions$
-    //     .ofType(PlayerSearchActions.SEARCH_MORE_FOR_QUERY)
-    //     .map(toPayload)
-    //     .withLatestFrom(this.store)
-    //     .map((latest: any[]) => latest[1])
-    //     .filter((store: EchoesState) => !store.search.isSearching)
-    //     .mergeMap((store: EchoesState) => {
-    //       this.youtubeSearch.searchMore(store.search.pageToken.next);
-    //       return this.youtubeSearch.searchFor(
-    //         store.search.searchType,
-    //         store.search.query,
-    //         store.search.queryParams,
-    //       )
-    //         .map(youtubeResponse => this.playerSearchActions.searchResultsReturned(youtubeResponse));
-    //     });
-
     const search = this.playerSearchSubject.getValue();
     if (!search.isSearching) {
       this.playerSearchSubject.next({ ...search, isSearching: true });
@@ -156,7 +133,7 @@ export class PlayerSearchService {
             this.playerSearchSubject.next({ ...search, pageToken });
           })
           .map((medias: { items: GoogleApiYouTubeSearchResource[] }) => medias.items.map(media => media.id.videoId).join(','))
-          .mergeMap((mediaIds: string) => this.youtubeVideosInfo.fetchVideosData(mediaIds))
+          .mergeMap((mediaIds: string) => this.youtubeApi.fetchVideosData(mediaIds))
           .subscribe(this.createAddVideosHandler());
       } else {
         this.youtubeSearch.searchMore(search.pageToken.next)

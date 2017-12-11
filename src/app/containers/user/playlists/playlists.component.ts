@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserProfile } from '../../../core/services';
-import { AppPlayerApi } from '../../../core/api/app-player.api';
+import { AppService } from '../../../core/services/app.service';
 
 @Component({
   selector: 'playlists',
@@ -21,7 +21,7 @@ import { AppPlayerApi } from '../../../core/api/app-player.api';
 export class PlaylistsComponent implements OnInit {
   playlists$ = this.userProfile.userProfile$.map(user => user.playlists);
 
-  constructor(private appPlayerApi: AppPlayerApi,
+  constructor(private appPlayerApi: AppService,
               private userProfile: UserProfile
   ) { }
 
