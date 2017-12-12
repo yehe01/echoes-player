@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppLayoutService } from '../../services/app-layout.service';
-import { PlayerSearchService } from '../../../containers/app-search/player-search.service';
+import { AppLayoutService } from '../../core/services/app-layout.service';
+import { PlayerSearchService } from '../../containers/app-search/player-search.service';
 
 @Component({
   selector: 'app-sidebar',

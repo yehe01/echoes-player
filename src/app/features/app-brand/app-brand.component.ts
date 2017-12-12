@@ -1,6 +1,5 @@
-import { AppApi } from '../../api/app.api';
 import { Component, OnInit } from '@angular/core';
-import { AppLayoutService } from '../../services/app-layout.service';
+import { AppLayoutService } from '../../core/services/app-layout.service';
 
 @Component({
   selector: 'app-brand',

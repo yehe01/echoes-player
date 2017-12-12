@@ -1,5 +1,5 @@
-import { MediaParserService } from '../../../services/media-parser.service';
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { MediaParserService } from '../../../core/services';
 
 @Component({
   selector: 'now-playlist-track',

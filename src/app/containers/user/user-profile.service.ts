@@ -5,10 +5,10 @@ import 'rxjs/add/operator/buffer';
 import 'rxjs/add/operator/catch';
 import { of } from 'rxjs/observable/of';
 
-import { YoutubeApi } from '../api/youtube-api';
-import { Authorization } from './authorization.service';
+import { YoutubeApi } from '../../core/api/youtube-api';
+import { Authorization } from '../../core/services/authorization.service';
 
-import { GoogleBasicProfile, IUserProfile } from '../models/user-profile';
+import { GoogleBasicProfile, IUserProfile } from './models/index';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AsyncLocalStorage } from 'angular-async-local-storage';

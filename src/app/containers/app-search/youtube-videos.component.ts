@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../core/services/app.service';
 
 import { PlayerSearchService } from './player-search.service';
-import { NowPlaylistService } from '../../core/components/now-playing';
+import { NowPlaylistService } from '../../features/now-playing';
 
 @Component({
   selector: 'youtube-videos',

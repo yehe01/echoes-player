@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from '../../../shared';
 
 import { AppNavigatorComponent } from './app-navigator.component';
+import { SharedModule } from '../../shared';
 
 @NgModule({
   imports: [

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { IAppPlayer } from './models/app-player/index';
-import { YoutubePlayerService } from '../../services/youtube-player.service';
+import { IAppPlayer } from './models/index';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
-import { YoutubeApi } from '../../api/youtube-api';
+import { YoutubePlayerService } from '../../core/services';
+import { YoutubeApi } from '../../core/api/youtube-api';
 
 const INIT_STATE: IAppPlayer = {
   mediaId: { videoId: 'NONE' },

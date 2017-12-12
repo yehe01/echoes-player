@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { INowPlaylist } from './models/now-playlist';
+import { INowPlaylist } from './models/index';
 import { NowPlaylistComponent } from './now-playlist';
 import { AppPlayerService } from '../app-player/app-player.service';
 import { NowPlaylistService } from './now-playlist.service';

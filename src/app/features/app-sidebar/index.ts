@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../shared';
 
 import { AppSidebarComponent } from './app-sidebar.component';
 import { AppBrandModule } from '../app-brand';
 import { AppNavigatorModule } from '../app-navigator';
 import { NowPlayingModule } from '../now-playing';
+import { SharedModule } from '../../shared';
 
 @NgModule({
   imports: [

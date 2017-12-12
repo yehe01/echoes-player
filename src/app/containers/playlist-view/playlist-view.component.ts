@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { NowPlaylistService } from '../../core/components/now-playing/now-playlist.service';
 import { AppApi } from '../../core/api/app.api';
 import { AppService } from '../../core/services/app.service';
+import { NowPlaylistService } from '../../features/now-playing';
 
 export interface PlaylistData {
   videos: GoogleApiYouTubeVideoResource[];

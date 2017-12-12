@@ -8,6 +8,7 @@ import { PlaylistsComponent } from './playlists';
 
 import { AuthGuard } from './user.guard';
 import { routing } from './user.routing';
+import { UserProfile } from './user-profile.service';
 
 @NgModule({
   imports: [
@@ -24,8 +25,7 @@ import { routing } from './user.routing';
   ],
   providers: [
     AuthGuard,
-    // PlaylistResolver,
-    // PlaylistVideosResolver
+    UserProfile
   ]
 })
 export class UserModule { }
