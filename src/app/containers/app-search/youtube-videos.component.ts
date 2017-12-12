@@ -21,10 +21,6 @@ import { NowPlaylistService } from '../../core/services';
   `
 })
 export class YoutubeVideosComponent implements OnInit {
-
-  // videos$ = this.store.let(getPlayerSearchResults$);
-  // loading$ = this.store.let(getIsSearching$);
-
   videos$ = this.playerSearchService.playerSearch$.map(search => search.results);
   loading$ = this.playerSearchService.playerSearch$.map(search => search.isSearching);
 
@@ -37,11 +33,9 @@ export class YoutubeVideosComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.store.dispatch(this.playerSearchActions.updateSearchType(CSearchTypes.VIDEO));
     this.playerSearchService.updateSearchType(CSearchTypes.VIDEO);
 
 
-    // this.store.dispatch(this.playerSearchActions.searchCurrentQuery());
     this.playerSearchService.searchCurrentQuery();
   }
 

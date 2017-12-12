@@ -1,9 +1,9 @@
-import { AppService } from '../services/app.service';
 import { YoutubeApi } from './youtube-api';
 import { YoutubeSearchApi } from './youtube-search.api';
+import { AppApi } from './app.api';
 
 export const APP_APIS = [
-  AppService,
+  AppApi,
   YoutubeApi,
   YoutubeSearchApi
 ];

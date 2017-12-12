@@ -1,5 +1,4 @@
 import { UserProfile } from './user-profile.service';
-import { YoutubeSearchApi } from '../api/youtube-search.api';
 import { YoutubePlayerService } from './youtube-player.service';
 import { NowPlaylistService } from './now-playlist.service';
 import { GapiLoader } from './gapi-loader.service';
@@ -9,10 +8,8 @@ import { MediaParserService } from './media-parser.service';
 import { PlayerSearchService } from './player-search.service';
 import { AppPlayerService } from './app-player.service';
 import { AppLayoutService } from './app-layout.service';
-import { AppApi } from '../api/app.api';
 
 export * from './user-profile.service';
-export * from '../api/youtube-search.api';
 export * from './youtube-player.service';
 export * from './now-playlist.service';
 export * from './gapi-loader.service';
@@ -29,7 +26,6 @@ export const APP_SERVICES = [
   { provide: AppLayoutService, useClass: AppLayoutService },
   { provide: PlayerSearchService, useClass: PlayerSearchService },
   { provide: AppPlayerService, useClass: AppPlayerService },
-  AppApi,
   VersionCheckerService,
   MediaParserService
 ];

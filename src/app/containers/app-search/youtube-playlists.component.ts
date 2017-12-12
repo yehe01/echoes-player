@@ -36,9 +36,6 @@ import { PlayerSearchService } from '../../core/services/player-search.service';
   `
 })
 export class YoutubePlaylistsComponent implements OnInit {
-  // results$ = this.store.let(getPlayerSearchResults$);
-  // isSearching$ = this.store.let(getIsSearching$);
-
   results$ = this.playerSearchService.playerSearch$.map(search => search.results);
   isSearching$ = this.playerSearchService.playerSearch$.map(search => search.isSearching);
 
@@ -48,20 +45,16 @@ export class YoutubePlaylistsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.store.dispatch(this.playerSearchActions.updateSearchType(CSearchTypes.PLAYLIST));
     this.playerSearchService.updateSearchType(CSearchTypes.PLAYLIST);
 
-    // this.store.dispatch(PlayerSearchActions.PLAYLISTS_SEARCH_START.creator());
     this.playerSearchService.searchCurrentQuery();
   }
 
   playPlaylist(media: GoogleApiYouTubePlaylistResource) {
-    // this.store.dispatch(new PlayPlaylistAction(media.id));
     this.appPlayerApi.playPlaylist(media);
   }
 
   queueSelectedPlaylist(media: GoogleApiYouTubePlaylistResource) {
-    // this.store.dispatch(new LoadPlaylistAction(media.id));
     this.appPlayerApi.queuePlaylist(media);
   }
 }
