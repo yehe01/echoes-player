@@ -152,11 +152,6 @@ export class NowPlaylistService {
   }
 
   removeVideo(media) {
-    // this.store.dispatch(new NowPlaylist.RemoveVideo(media));
-
-    // case NowPlaylistActions.REMOVE:
-    //   return { ...state, videos: removeMedia(state.videos, action.payload) };
-
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -167,7 +162,6 @@ export class NowPlaylistService {
 
   // queue and select
   selectVideo(media) {
-    // this.store.dispatch(new NowPlaylist.SelectVideo(media));
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -177,10 +171,6 @@ export class NowPlaylistService {
   }
 
   updateFilter(filter: string) {
-    // this.store.dispatch(new NowPlaylist.FilterChange(filter));
-    // case NowPlaylistActions.FILTER_CHANGE:
-    //   return { ...state, filter: action.payload };
-
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -190,11 +180,6 @@ export class NowPlaylistService {
   }
 
   clearPlaylist() {
-    // this.store.dispatch(new NowPlaylist.RemoveAll());
-
-    // case NowPlaylistActions.REMOVE_ALL:
-    //   return { ...state, videos: [], filter: '', selectedId: '' };
-
     this.playlistSubject.next({
       ...this.playlistSubject.getValue(),
       videos: [], filter: '', selectedId: ''
@@ -202,14 +187,6 @@ export class NowPlaylistService {
   }
 
   selectNextIndex() {
-    // this.store.dispatch(new NowPlaylist.SelectNext());
-    // case NowPlaylistActions.SELECT_NEXT: {
-    //     return {
-    //       ...state,
-    //       selectedId: selectNextIndex(state.videos, state.selectedId, state.filter, state.repeat)
-    //     };
-    //   }
-
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -219,14 +196,6 @@ export class NowPlaylistService {
   }
 
   selectPreviousIndex() {
-    // this.store.dispatch(new NowPlaylist.SelectPrevious());
-
-    // case NowPlaylistActions.SELECT_PREVIOUS:
-    //   return {
-    //     ...state,
-    //     selectedId: selectPreviousIndex(state.videos, state.selectedId, state.filter)
-    //   };
-
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -236,11 +205,6 @@ export class NowPlaylistService {
   }
 
   trackEnded() {
-    // this.store.dispatch(new NowPlaylist.MediaEnded());
-
-    // case NowPlaylistActions.MEDIA_ENDED:
-    //   return selectNextOrPreviousTrack(state, state.filter);
-
     const playlist = this.playlistSubject.getValue();
     this.playlistSubject.next(NowPlaylistService.selectNextOrPreviousTrack(playlist, playlist.filter));
   }
@@ -254,11 +218,6 @@ export class NowPlaylistService {
   }
 
   updateIndexByMedia(mediaId: string) {
-    // this.store.dispatch(new NowPlaylist.UpdateIndexByMedia(mediaId));
-
-    // case NowPlaylistActions.UPDATE_INDEX:
-    //   return { ...state, selectedId: action.payload };
-
     this.playlistSubject.next({
       ...this.playlistSubject.getValue(), selectedId: mediaId
     });
@@ -275,15 +234,6 @@ export class NowPlaylistService {
   }
 
   toggleRepeat() {
-    // this.store.dispatch(this.nowPlaylistActions.toggleRepeat());
-
-    // case NowPlaylistActions.TOGGLE_REPEAT: {
-    //     return {
-    //       ...state,
-    //       repeat: !state.repeat
-    //     };
-    //   }
-
     const playlist = this.playlistSubject.getValue();
 
     this.playlistSubject.next({
@@ -293,21 +243,6 @@ export class NowPlaylistService {
   }
 
   seekToTrack(trackEvent) {
-    // this.store.dispatch(this.nowPlaylistActions.seekTo(trackEvent));
-
-    // @Effect()
-    //   selectBeforeSeekToTime$ = this.actions$
-    //     .ofType(NowPlaylist.NowPlaylistActions.SELECT_AND_SEEK_TO_TIME)
-    //     .map(toPayload)
-    //     .map(trackEvent => new NowPlaylist.UpdateIndexByMedia(trackEvent.media.id));
-    //
-    // @Effect({ dispatch: false })
-    //   seekToTime$ = this.actions$
-    //     .ofType(NowPlaylist.NowPlaylistActions.SELECT_AND_SEEK_TO_TIME)
-    //     .map(toPayload)
-    //     .do(trackEvent => this.playerService.seekTo(this.mediaParser.toNumber(trackEvent.time)));
-    // }
-
     // ???
     this.updateIndexByMedia(trackEvent.media.id);
 

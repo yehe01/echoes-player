@@ -22,7 +22,6 @@ export * from './media-parser.service';
 
 export const APP_SERVICES = [
   { provide: UserProfile, useClass: UserProfile },
-  { provide: YoutubeSearchApi, useClass: YoutubeSearchApi },
   { provide: YoutubePlayerService, useClass: YoutubePlayerService },
   { provide: NowPlaylistService, useClass: NowPlaylistService },
   { provide: GapiLoader, useClass: GapiLoader },

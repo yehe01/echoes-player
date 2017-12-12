@@ -37,7 +37,6 @@ export class VersionCheckerService {
         .retry()
         .filter(response => response && response.status === 200)
         .subscribe(response => {
-          // this.store.dispatch(new AppLayout.RecievedAppVersion(response.json()));
           this.appLayoutService.recievedAppVersion(response.json());
         });
     });
@@ -59,7 +58,6 @@ export class VersionCheckerService {
   }
 
   notifyNewVersion(response) {
-    // this.store.dispatch(new AppLayout.RecievedAppVersion(response.json()));
     this.appLayoutService.recievedAppVersion(response.json());
   }
 }

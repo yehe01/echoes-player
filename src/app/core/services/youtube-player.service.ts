@@ -33,8 +33,6 @@ export class YoutubePlayerService {
   }
 
   onPlayerStateChange(event) {
-    // const state = event.data;
-    // this.store.dispatch(new AppPlayer.UpdateState(state));
   }
 
   setSize(height, width) {
