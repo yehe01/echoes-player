@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CSearchTypes } from '../../../core/models/player-search';
+import { CSearchTypes } from '../models/player-search';
 
 @Component({
   selector: 'search-navigator',

@@ -23,9 +23,6 @@ import { UserProfile, Authorization } from '../../core/services';
   `
 })
 export class UserComponent implements OnInit {
-  // playlists$ = this.store.let(getUserPlaylists$);
-  // currentPlaylist$ = this.store.let(getUserViewPlaylist$);
-  // isSignedIn$ = this.store.let(getIsUserSignedIn$);
   isSignedIn$ = this.userProfile.userProfile$.map(user => user.access_token !== '');
 
   constructor(
@@ -38,8 +35,4 @@ export class UserComponent implements OnInit {
   signInUser () {
     this.authorization.signIn();
   }
-
-  // getPlaylists () {
-  //   return this.youtubeApiService.getPlaylists2(true);
-  // }
 }

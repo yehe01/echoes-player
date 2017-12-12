@@ -1,10 +1,10 @@
-import { CSearchTypes } from '../../core/models/player-search';
+import { CSearchTypes } from './models/player-search';
 import { Component, OnInit } from '@angular/core';
 
 import { AppService } from '../../core/services/app.service';
 
 import { fadeInAnimation } from '../../shared/animations/fade-in.animation';
-import { PlayerSearchService } from '../../core/services/player-search.service';
+import { PlayerSearchService } from './player-search.service';
 
 @Component({
   selector: 'youtube-playlists',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IPresetParam} from '../../core/models/player-search';
-import { PlayerSearchService } from '../../core/services/player-search.service';
+import { IPresetParam} from './models/player-search';
+import { PlayerSearchService } from './player-search.service';
 import { UserProfile } from '../../core/services';
 
 @Component({

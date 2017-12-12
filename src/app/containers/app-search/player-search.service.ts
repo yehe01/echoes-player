@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { CPresetTypes, CSearchTypes, IPlayerSearch } from '../models/player-search';
-import { YoutubeSearchApi } from '../api/youtube-search.api';
+import { CPresetTypes, CSearchTypes, IPlayerSearch } from './models/player-search';
+import { YoutubeSearchApi } from '../../core/api/youtube-search.api';
 import { Subscriber } from 'rxjs/Subscriber';
-import { YoutubeApi } from '../api/youtube-api';
+import { YoutubeApi } from '../../core/api/youtube-api';
 
 const INIT_STATE: IPlayerSearch = {
   query: '',

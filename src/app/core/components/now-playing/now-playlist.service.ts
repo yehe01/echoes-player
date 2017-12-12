@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import * as NowPlaylist from '../models/now-playlist';
+import * as NowPlaylist from './models/now-playlist/index';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { INowPlaylist } from '../models/now-playlist';
-import { MediaParserService } from './media-parser.service';
-import { YoutubePlayerService } from './youtube-player.service';
+import { INowPlaylist } from './models/now-playlist';
+import { MediaParserService } from '../../services';
+import { YoutubePlayerService } from '../../services';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
-import { YoutubeApi } from '../api/youtube-api';
+import { YoutubeApi } from '../../api/youtube-api';
 
 const INIT_STATE: INowPlaylist = {
   videos: [],

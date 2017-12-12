@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { NowPlaylistService } from '../../services';
-import { INowPlaylist } from '../../models/now-playlist';
+import { INowPlaylist } from './models/now-playlist';
 import { NowPlaylistComponent } from './now-playlist';
-import { AppPlayerService } from '../../services/app-player.service';
+import { AppPlayerService } from '../app-player/app-player.service';
+import { NowPlaylistService } from './now-playlist.service';
 
 @Component({
   selector: 'now-playing',

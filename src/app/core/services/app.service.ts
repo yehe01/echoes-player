@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NowPlaylistService } from './index';
-import { AppPlayerService } from './app-player.service';
+import { AppPlayerService } from '../components/app-player/app-player.service';
 import { YoutubeApi } from '../api/youtube-api';
+import { NowPlaylistService } from '../components/now-playing';
 
 @Injectable()
 export class AppService {

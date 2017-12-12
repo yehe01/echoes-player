@@ -9,7 +9,7 @@ import {
   AfterViewChecked,
   NgZone
 } from '@angular/core';
-import * as NowPlaylist from '../../../models/now-playlist';
+import * as NowPlaylist from '../models/now-playlist';
 import { flyOut } from '../../../../shared/animations/fade-in.animation';
 
 @Component({

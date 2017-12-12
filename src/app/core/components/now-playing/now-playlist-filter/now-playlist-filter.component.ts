@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import * as NowPlaylist from '../../../models/now-playlist';
+import * as NowPlaylist from '../models/now-playlist';
 
 @Component({
   selector: 'now-playlist-filter',

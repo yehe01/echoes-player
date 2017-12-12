@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, HostBinding, OnInit } from '@angular/core';
 
-import { NowPlaylistService, YoutubePlayerService } from '../../services';
-import { AppPlayerService } from '../../services/app-player.service';
+import { YoutubePlayerService } from '../../services';
+import { AppPlayerService } from './app-player.service';
+import { NowPlaylistService } from '../now-playing';
 
 @Component({
   selector: 'app-player',

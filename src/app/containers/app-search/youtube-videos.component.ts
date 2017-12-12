@@ -1,10 +1,10 @@
-import { CSearchTypes } from '../../core/models/player-search';
+import { CSearchTypes } from './models/player-search';
 import { Component, OnInit } from '@angular/core';
 
 import { AppService } from '../../core/services/app.service';
 
-import { PlayerSearchService } from '../../core/services/player-search.service';
-import { NowPlaylistService } from '../../core/services';
+import { PlayerSearchService } from './player-search.service';
+import { NowPlaylistService } from '../../core/components/now-playing';
 
 @Component({
   selector: 'youtube-videos',

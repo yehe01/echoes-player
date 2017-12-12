@@ -6,6 +6,7 @@ import { MediaInfoComponent } from './media-info';
 import { PlayerControlsComponent } from './player-controls/player-controls.component';
 import { PlayerResizerComponent } from './player-resizer/player-resizer.component';
 import { ImageBlurComponent } from './image-blur';
+import { AppPlayerService } from './app-player.service';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ImageBlurComponent } from './image-blur';
   ],
   exports: [
     AppPlayerComponent
-  ]
+  ],
+  providers: [AppPlayerService]
 })
 export class AppPlayerModule { }
