@@ -1,4 +1,3 @@
-// import { PlaylistResolver, PlaylistVideosResolver } from '../../shared/components/playlist-view';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

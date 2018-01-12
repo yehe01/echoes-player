@@ -1,13 +1,8 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
+  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output,
   SimpleChanges
 } from '@angular/core';
-import { fadeInAnimation } from '../../animations/fade-in.animation';
+import { fadeInAnimation } from '../../animations';
 
 function createIdMap(list: GoogleApiYouTubeVideoResource[]) {
   return list.reduce((acc, cur) => {
@@ -21,18 +16,18 @@ function createIdMap(list: GoogleApiYouTubeVideoResource[]) {
   styleUrls: ['./youtube-list.scss'],
   animations: [fadeInAnimation],
   template: `
-  <ul class="list-unstyled clearfix">
-    <li class="youtube-list-item" [@fadeIn] *ngFor="let media of list">
-      <youtube-media
-        [media]="media"
-        [status]="getMediaStatus(media)"
-        (play)="playSelectedVideo(media)"
-        (queue)="queueSelectedVideo(media)"
-        (unqueue)="unqueueSelectedVideo(media)"
-        (add)="addVideo(media)">
-      </youtube-media>
-    </li>
-  </ul>
+    <ul class="list-unstyled clearfix">
+      <li class="youtube-list-item" [@fadeIn] *ngFor="let media of list">
+        <youtube-media
+          [media]="media"
+          [status]="getMediaStatus(media)"
+          (play)="playSelectedVideo(media)"
+          (queue)="queueSelectedVideo(media)"
+          (unqueue)="unqueueSelectedVideo(media)"
+          (add)="addVideo(media)">
+        </youtube-media>
+      </li>
+    </ul>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -45,8 +40,6 @@ export class YoutubeListComponent implements OnChanges {
   @Output() unqueue = new EventEmitter();
 
   queuedMediaIdMap = {};
-
-  constructor() {}
 
   ngOnChanges({ queued }: SimpleChanges) {
     if (queued && queued.currentValue) {

@@ -26,15 +26,13 @@ export class YoutubeVideosComponent implements OnInit {
 
   playlistVideos$ = this.nowPlaylistService.playlist$.map(p => p.videos);
 
-  constructor(
-    private appPlayerApi: AppService,
-    private nowPlaylistService: NowPlaylistService,
-    private playerSearchService: PlayerSearchService
-  ) {}
+  constructor(private appPlayerApi: AppService,
+              private nowPlaylistService: NowPlaylistService,
+              private playerSearchService: PlayerSearchService) {
+  }
 
   ngOnInit() {
     this.playerSearchService.updateSearchType(CSearchTypes.VIDEO);
-
 
     this.playerSearchService.searchCurrentQuery();
   }

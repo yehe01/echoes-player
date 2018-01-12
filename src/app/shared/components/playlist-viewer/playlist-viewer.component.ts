@@ -1,24 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'playlist-viewer',
   styleUrls: ['./playlist-viewer.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <playlist-cover
-    [playlist]="playlist"
-    (play)="onPlayPlaylist($event)"
-    (queue)="onQueuePlaylist($event)">
-  </playlist-cover>
-  <section class="col-md-12">
-    <youtube-list
-      [list]="videos"
-      [queued]="queuedPlaylist"
-      (play)="onPlayVideo($event)"
-      (queue)="onQueueVideo($event)"
-      (unqueue)="onRemove($event)"
-    ></youtube-list>
-  </section>
+    <playlist-cover
+      [playlist]="playlist"
+      (play)="onPlayPlaylist($event)"
+      (queue)="onQueuePlaylist($event)">
+    </playlist-cover>
+    <section class="col-md-12">
+      <youtube-list
+        [list]="videos"
+        [queued]="queuedPlaylist"
+        (play)="onPlayVideo($event)"
+        (queue)="onQueueVideo($event)"
+        (unqueue)="onRemove($event)"
+      ></youtube-list>
+    </section>
   `
 })
 export class PlaylistViewerComponent implements OnInit {
@@ -32,12 +32,13 @@ export class PlaylistViewerComponent implements OnInit {
   @Output() playVideo = new EventEmitter<GoogleApiYouTubeVideoResource>();
   @Output() unqueueVideo = new EventEmitter<GoogleApiYouTubeVideoResource>();
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
-  onPlayPlaylist (playlist: GoogleApiYouTubePlaylistResource) {
+  onPlayPlaylist(playlist: GoogleApiYouTubePlaylistResource) {
     this.playPlaylist.emit(playlist);
   }
 

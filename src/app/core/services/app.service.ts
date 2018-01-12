@@ -27,7 +27,6 @@ export class AppService {
         this.nowPlaylistService.queueVideos(items);
         this.nowPlaylistService.selectVideo(items[0]);
         this.appPlayerService.loadAndPlay(items[0]);
-
       });
   }
 

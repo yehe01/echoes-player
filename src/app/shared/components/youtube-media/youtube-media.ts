@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-// import './youtube-media.scss';
 
 interface MediaStatus {
   queued: boolean;
