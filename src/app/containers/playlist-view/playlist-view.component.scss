@@ -1,3 +1,6 @@
-.playlist-view {
-
+:host {
+  .playlist-content-view {
+    display: block;
+    padding-bottom: 6rem;
+  }
 }
