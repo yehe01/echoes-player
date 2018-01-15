@@ -33,7 +33,6 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 # Todo
 
-- [ ] Fix navigate back
 - [ ] Refactor youtube api services
 - [ ] Migrate tests
 

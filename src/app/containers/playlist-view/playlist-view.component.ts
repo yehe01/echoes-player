@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { AppApi } from '../../core/api/app.api';
+import { Location } from '@angular/common';
 import { AppService } from '../../core/services/app.service';
 import { NowPlaylistService } from '../../features/now-playing';
 
@@ -52,7 +51,7 @@ export class PlaylistViewComponent {
   constructor(private route: ActivatedRoute,
               private nowPlaylistService: NowPlaylistService,
               private appPlayerApi: AppService,
-              private appApi: AppApi) {
+              private location: Location) {
   }
 
   playPlaylist(playlist: GoogleApiYouTubePlaylistResource) {
@@ -76,6 +75,6 @@ export class PlaylistViewComponent {
   }
 
   handleBack() {
-    this.appApi.navigateBack();
+    this.location.back();
   }
 }
