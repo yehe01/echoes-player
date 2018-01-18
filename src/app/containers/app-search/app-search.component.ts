@@ -18,7 +18,6 @@ import { UserProfile } from '../../core/services';
         <div class="navbar-header">
           <player-search
             [query]="query$ | async"
-            (queryChange)="resetPageToken($event)"
             (search)="search($event)"
           ></player-search>
         </div>
@@ -48,10 +47,6 @@ export class AppSearchComponent {
 
   search(query: string) {
     this.playerSearchService.searchNewQuery(query);
-  }
-
-  resetPageToken(query: string) {
-    this.playerSearchService.updateQueryAction(query);
   }
 
   searchMore() {

@@ -96,12 +96,6 @@ export class PlayerSearchService {
     }
   }
 
-  updateQueryAction(query: string) {
-    this.playerSearchSubject.next({
-      ...this.playerSearchSubject.getValue(), query
-    });
-  }
-
   searchMoreForQuery() {
     const search = this.playerSearchSubject.getValue();
     if (!search.isSearching) {
