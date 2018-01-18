@@ -51,98 +51,21 @@ export class PlayerSearchService {
   }
 
   searchNewQuery(query: string) {
-    let newPlayerSearch = { ...this.playerSearchSubject.getValue(), query: query, isSearching: true };
-    this.playerSearchSubject.next(newPlayerSearch);
+    const search = {
+      ...this.playerSearchSubject.getValue(), query: query,
+      isSearching: true,
+      results: []
+    };
 
-    newPlayerSearch = { ...newPlayerSearch, results: [] };
-    this.playerSearchSubject.next(newPlayerSearch);
+    this.playerSearchSubject.next(search);
 
-    if (newPlayerSearch.searchType === CSearchTypes.VIDEO) {
-
-      this.youtubeSearch.searchFor(newPlayerSearch.searchType, newPlayerSearch.query, '', newPlayerSearch.queryParams)
-        .do((youtubeResponse) => {
-          const { nextPageToken, prevPageToken } = youtubeResponse;
-          const statePageToken = newPlayerSearch.pageToken;
-          const pageToken = {
-            next: nextPageToken || statePageToken.next,
-            prev: prevPageToken || statePageToken.prev
-          };
-
-          newPlayerSearch = { ...newPlayerSearch, pageToken };
-          this.playerSearchSubject.next(newPlayerSearch);
-        })
-        .map((medias: { items: GoogleApiYouTubeSearchResource[] }) => medias.items.map(media => media.id.videoId).join(','))
-        .mergeMap((mediaIds: string) => this.youtubeApi.fetchVideosData(mediaIds))
-        .subscribe(this.createAddVideosHandler());
-      // .catch((err) => Observable.of(this.playerSearchActions.errorInSearch(err)))
-    } else {
-      this.youtubeSearch.searchFor(
-          newPlayerSearch.searchType,
-          newPlayerSearch.query, '',
-          newPlayerSearch.queryParams,
-        )
-        .do(youtubeResponse => {
-          const { nextPageToken, prevPageToken } = youtubeResponse;
-          const statePageToken = newPlayerSearch.pageToken;
-          const pageToken = {
-            next: nextPageToken || statePageToken.next,
-            prev: prevPageToken || statePageToken.prev
-          };
-
-          this.playerSearchSubject.next({ ...newPlayerSearch, pageToken });
-        })
-        .map(result => result.items)
-        .subscribe(this.createAddVideosHandler());
-    }
+    this.searchQuery(search, '');
   }
 
   searchMoreForQuery() {
     const search = this.playerSearchSubject.getValue();
     if (!search.isSearching) {
-      this.playerSearchSubject.next({ ...search, isSearching: true });
-
-      // todo: refactor
-      if (search.searchType === CSearchTypes.VIDEO) {
-        this.youtubeSearch.searchFor(
-            search.searchType,
-            search.query,
-            search.pageToken.next,
-            search.queryParams,
-          )
-          .do(youtubeResponse => {
-            const { nextPageToken, prevPageToken } = youtubeResponse;
-            const statePageToken = search.pageToken;
-            const pageToken = {
-              next: nextPageToken || statePageToken.next,
-              prev: prevPageToken || statePageToken.prev
-            };
-
-            this.playerSearchSubject.next({ ...search, pageToken });
-          })
-          .map((medias: { items: GoogleApiYouTubeSearchResource[] }) => medias.items.map(media => media.id.videoId).join(','))
-          .mergeMap((mediaIds: string) => this.youtubeApi.fetchVideosData(mediaIds))
-          .subscribe(this.createAddVideosHandler());
-      } else {
-        this.youtubeSearch.searchFor(
-            search.searchType,
-            search.query,
-            search.pageToken.next,
-            search.queryParams,
-          )
-          .do(youtubeResponse => {
-            const { nextPageToken, prevPageToken } = youtubeResponse;
-            const statePageToken = search.pageToken;
-            const pageToken = {
-              next: nextPageToken || statePageToken.next,
-              prev: prevPageToken || statePageToken.prev
-            };
-
-            this.playerSearchSubject.next({ ...search, pageToken });
-          })
-          .map(result => result.items)
-          .subscribe(this.createAddVideosHandler());
-      }
-
+      this.searchQuery(search, search.pageToken.next);
     }
   }
 
@@ -160,6 +83,24 @@ export class PlayerSearchService {
     this.searchCurrentQuery();
   }
 
+  private searchQuery(search: IPlayerSearch, pageToken: string) {
+    this.playerSearchSubject.next({ ...search, isSearching: true });
+
+    if (search.searchType === CSearchTypes.VIDEO) {
+      this.youtubeSearch.searchFor(search.searchType, search.query, pageToken, search.queryParams)
+        .do(v => this.updatePageToken(v))
+        .map((medias: { items: GoogleApiYouTubeSearchResource[] }) =>
+          medias.items.map(media => media.id.videoId).join(','))
+        .mergeMap((mediaIds: string) => this.youtubeApi.fetchVideosData(mediaIds))
+        .subscribe(this.createAddVideosHandler());
+    } else {
+      this.youtubeSearch.searchFor(search.searchType, search.query, pageToken, search.queryParams)
+        .do(v => this.updatePageToken(v))
+        .map(result => result.items)
+        .subscribe(this.createAddVideosHandler());
+    }
+  }
+
   private createAddVideosHandler() {
     return Subscriber.create((videos: GoogleApiYouTubeVideoResource[]) => {
       const state = this.playerSearchSubject.getValue();
@@ -170,6 +111,26 @@ export class PlayerSearchService {
       };
 
       this.playerSearchSubject.next(newState);
+    }, e => {
+      const search = {
+        ...this.playerSearchSubject.getValue(),
+        results: [],
+        isSearching: false
+      };
+
+      this.playerSearchSubject.next(search);
     });
+  }
+
+  private updatePageToken(youtubeResponse) {
+    const search = this.playerSearchSubject.getValue();
+    const { nextPageToken, prevPageToken } = youtubeResponse;
+    const statePageToken = search.pageToken;
+    const newPageToken = {
+      next: nextPageToken || statePageToken.next,
+      prev: prevPageToken || statePageToken.prev
+    };
+
+    this.playerSearchSubject.next({ ...search, newPageToken });
   }
 }

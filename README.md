@@ -33,6 +33,6 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 # Todo
 
-- [ ] Refactor youtube api services
 - [ ] Migrate tests
+- [ ] Refactor youtube api services
 

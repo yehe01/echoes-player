@@ -1,13 +1,13 @@
 import {
+  AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   Output,
-  ViewEncapsulation,
-  AfterViewChecked,
-  NgZone
+  ViewEncapsulation
 } from '@angular/core';
 import * as NowPlaylist from '../models/index';
 import { flyOut } from '../../../shared/animations/fade-in.animation';
@@ -18,23 +18,21 @@ import { flyOut } from '../../../shared/animations/fade-in.animation';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./now-playlist.scss'],
   template: `
-  <section class="now-playlist ux-maker">
-    <ul class="nav nav-list ux-maker nicer-ux">
-      <li class="now-playlist-track" #playlistTrack
-        [ngClass]="{
-          'active': isActiveMedia(video.id, playlistTrack)
-        }"
-        *ngFor="let video of playlist.videos | search:playlist.filter; let index = index"
-        [@flyOut]>
-        <now-playlist-track
-          [video]="video" [index]="index"
-          (remove)="removeVideo($event)"
-          (select)="selectVideo(video)"
-          (selectTrack)="selectTrackInVideo($event)"
-        ></now-playlist-track>
-      </li>
-    </ul>
-  </section>
+    <section class="now-playlist ux-maker">
+      <ul class="nav nav-list ux-maker nicer-ux">
+        <li class="now-playlist-track" #playlistTrack
+            [ngClass]="{'active': isActiveMedia(video.id, playlistTrack)}"
+            *ngFor="let video of playlist.videos | search:playlist.filter; let index = index"
+            [@flyOut]>
+          <now-playlist-track
+            [video]="video" [index]="index"
+            (remove)="removeVideo($event)"
+            (select)="selectVideo(video)"
+            (selectTrack)="selectTrackInVideo($event)"
+          ></now-playlist-track>
+        </li>
+      </ul>
+    </section>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,13 +44,13 @@ export class NowPlaylistComponent implements OnChanges, AfterViewChecked {
     time: string;
     media: GoogleApiYouTubeVideoResource;
   }>();
-  // @Output() sort = new EventEmitter<GoogleApiYouTubeSearchResource>();
   @Output() remove = new EventEmitter<GoogleApiYouTubeVideoResource>();
 
   public activeTrackElement: HTMLUListElement;
   public hasActiveChanged = false;
 
-  constructor(public zone: NgZone) {}
+  constructor(public zone: NgZone) {
+  }
 
   ngAfterViewChecked() {
     if (this.hasActiveChanged && this.activeTrackElement) {
@@ -80,10 +78,6 @@ export class NowPlaylistComponent implements OnChanges, AfterViewChecked {
 
   removeVideo(media: GoogleApiYouTubeVideoResource) {
     this.remove.emit(media);
-  }
-
-  sortVideo(media: GoogleApiYouTubeVideoResource) {
-    // this.sort.next(media);
   }
 
   isActiveMedia(mediaId: string, trackElement: HTMLUListElement) {

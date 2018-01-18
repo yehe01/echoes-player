@@ -30,7 +30,7 @@ export class YoutubeSearchApi {
     pageToken: ''
   };
 
-  constructor(private youtubeApiService: YoutubeApi) {
+  constructor(private youtubeApi: YoutubeApi) {
   }
 
   search(query: string, params?: any) {
@@ -38,7 +38,7 @@ export class YoutubeSearchApi {
       const preset = params ? ` ${params.preset}` : '';
       this._apiOptions.q = `${query}${preset}`;
     }
-    return this.youtubeApiService.search(DataApiProviders.SEARCH, this._apiOptions);
+    return this.youtubeApi.search(DataApiProviders.SEARCH, this._apiOptions);
   }
 
   searchFor(type: string, query: string, pageToken = '', params?: any) {
@@ -70,7 +70,7 @@ export class YoutubeSearchApi {
           part: 'snippet,id,contentDetails',
           id: response.items.map(pl => pl.id.playlistId).join(',')
         };
-        return this.youtubeApiService.search(DataApiProviders.PLAYLISTS, options);
+        return this.youtubeApi.search(DataApiProviders.PLAYLISTS, options);
       });
   }
 }

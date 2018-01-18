@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { IPresetParam } from './models/player-search';
 import { PlayerSearchService } from './player-search.service';
