@@ -3,11 +3,6 @@ import { Injectable } from '@angular/core';
 import { YOUTUBE_API_KEY } from '../constants';
 import { Authorization } from '../authorization.service';
 
-export const DataApiProviders = {
-  SEARCH: 'search',
-  PLAYLISTS: 'playlists'
-};
-
 /**
  * Performs http requests using HttpModule to youtube-api v3.
  *

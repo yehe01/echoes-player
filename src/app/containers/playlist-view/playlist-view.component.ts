@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { NowPlaylistService } from '../../core/services/now-playlist.service';
-import { AppApi } from '../../core/api/app.api';
-import { AppPlayerApi } from '../../core/api/app-player.api';
+import { Location } from '@angular/common';
+import { AppService } from '../../core/services/app.service';
+import { NowPlaylistService } from '../../features/now-playing';
 
 export interface PlaylistData {
   videos: GoogleApiYouTubeVideoResource[];
@@ -14,27 +13,31 @@ export interface PlaylistData {
   selector: 'playlist-view',
   styleUrls: ['./playlist-view.component.scss'],
   template: `
-  <article>
-    <app-navbar [header]="header$ | async"
-      [mainIcon]="'chevron-left'"
-      (headerMainIconClick)="handleBack()">
-    </app-navbar>
-    <div class="row">
-      <playlist-viewer class="clearfix"
-        [videos]="videos$ | async"
-        [playlist]="playlist$ | async"
-        [queuedPlaylist]="nowPlaylist$ | async"
-        (playPlaylist)="playPlaylist($event)"
-        (queuePlaylist)="queuePlaylist($event)"
-        (playVideo)="playVideo($event)"
-        (queueVideo)="queueVideo($event)"
-        (unqueueVideo)="unqueueVideo($event)"
-      ></playlist-viewer>
-    </div>
-  </article>
+    <article>
+      <app-navbar [header]="header$ | async"
+                  [mainIcon]="'chevron-left'"
+                  (headerMainIconClick)="handleBack()">
+      </app-navbar>
+      <div class="row playlist-content-view">
+        <playlist-cover
+          [playlist]="playlist$ | async"
+          (play)="playPlaylist($event)"
+          (queue)="queuePlaylist($event)">
+        </playlist-cover>
+        <section class="col-md-12">
+          <youtube-list
+            [list]="videos$ | async"
+            [queued]="nowPlaylist$ | async"
+            (play)="playVideo($event)"
+            (queue)="queueVideo($event)"
+            (unqueue)="unqueueVideo($event)"
+          ></youtube-list>
+        </section>
+      </div>
+    </article>
   `
 })
-export class PlaylistViewComponent implements OnInit {
+export class PlaylistViewComponent {
   playlist$ = this.route.data.map((data: PlaylistData) => data.playlist);
   videos$ = this.route.data.map((data: PlaylistData) => data.videos);
   header$ = this.route.data.map((data: PlaylistData) => {
@@ -47,10 +50,9 @@ export class PlaylistViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private nowPlaylistService: NowPlaylistService,
-              private appPlayerApi: AppPlayerApi,
-              private appApi: AppApi) { }
-
-  ngOnInit() { }
+              private appPlayerApi: AppService,
+              private location: Location) {
+  }
 
   playPlaylist(playlist: GoogleApiYouTubePlaylistResource) {
     this.appPlayerApi.playPlaylist(playlist);
@@ -73,6 +75,6 @@ export class PlaylistViewComponent implements OnInit {
   }
 
   handleBack() {
-    this.appApi.navigateBack();
+    this.location.back();
   }
 }

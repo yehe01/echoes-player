@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../shared';
 
 import { AppNavbarModule } from '../app-navbar';
 import { PlaylistViewComponent } from './playlist-view.component';
 
 import { routing } from './playlist-view.routing';
+import { PlaylistCoverComponent } from './playlist-cover.component';
+import { SharedModule } from '../../shared';
 
 @NgModule({
   imports: [
-    SharedModule,
     AppNavbarModule,
+    SharedModule,
     routing
   ],
   declarations: [
-    PlaylistViewComponent
+    PlaylistViewComponent,
+    PlaylistCoverComponent
   ],
   exports: [
     PlaylistViewComponent

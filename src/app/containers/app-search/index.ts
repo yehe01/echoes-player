@@ -9,6 +9,7 @@ import { YoutubePlaylistsComponent } from './youtube-playlists.component';
 import { PlayerSearchComponent } from './player-search.component';
 import { SearchNavigatorComponent } from './search-navigator';
 import { routing } from './app-search.routing';
+import { PlayerSearchService } from './player-search.service';
 
 @NgModule({
   imports: [
@@ -27,6 +28,6 @@ import { routing } from './app-search.routing';
   exports: [
     AppSearchComponent
   ],
-  providers: []
+  providers: [PlayerSearchService]
 })
 export class AppSearchModule { }

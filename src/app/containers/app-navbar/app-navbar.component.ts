@@ -1,17 +1,10 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
+  ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output,
   ViewEncapsulation
 } from '@angular/core';
 
-import { Authorization } from '../../core/services';
-import { UserProfile } from '../../core/services';
+import { Authorization, UserProfile, VersionCheckerService } from '../../core/services';
 import { AppLayoutService } from '../../core/services/app-layout.service';
-import { VersionCheckerService } from '../../core/services';
 
 @Component({
   selector: 'app-navbar',
@@ -21,9 +14,9 @@ import { VersionCheckerService } from '../../core/services';
     <nav class="row navbar navbar-default navbar-fixed-top">
       <div class="navbar-container">
         <div class="navbar__content">
-        <h3 *ngIf="header" class="navbar__header navbar-text">
+          <h3 *ngIf="header" class="navbar__header navbar-text">
             <button *ngIf="mainIcon" class="navbar-btn__main btn-transparent"
-              (click)="handleMainIconClick()">
+                    (click)="handleMainIconClick()">
               <i class="fa fa-{{ mainIcon }}"></i>
             </button>
             <i class="fa fa-{{ headerIcon }}" *ngIf="headerIcon"></i> {{ header }}
@@ -34,8 +27,7 @@ import { VersionCheckerService } from '../../core/services';
           <app-navbar-user
             [signedIn]="isSignIn()"
             [userImageUrl]="(user$ | async).profile.imageUrl"
-            (signIn)="signInUser()"
-            ></app-navbar-user>
+            (signIn)="signInUser()"></app-navbar-user>
           <app-navbar-menu
             [appVersion]="appVersion$ | async"
             [theme]="themes$ | async"
@@ -74,14 +66,14 @@ export class AppNavbarComponent implements OnInit {
   @Output() signOut = new EventEmitter();
   @Output() headerMainIconClick = new EventEmitter();
 
-  constructor(
-    private authorization: Authorization,
-    private userProfileService: UserProfile,
-    private versionCheckerService: VersionCheckerService,
-    private appLayoutService: AppLayoutService,
-  ) { }
+  constructor(private authorization: Authorization,
+              private userProfileService: UserProfile,
+              private versionCheckerService: VersionCheckerService,
+              private appLayoutService: AppLayoutService) {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   signInUser() {
     this.authorization.signIn();
@@ -90,10 +82,6 @@ export class AppNavbarComponent implements OnInit {
 
   signOutUser() {
     this.authorization.signOut();
-    // this.authorization.signOut().subscribe(response => {
-    //   // this.store.dispatch(this.userProfileActions.signOut());
-    //   this.userProfileService.signOut();
-    // });
     this.signOut.next();
   }
 
@@ -102,12 +90,10 @@ export class AppNavbarComponent implements OnInit {
   }
 
   updateVersion() {
-    // this.store.dispatch(new AppLayout.UpdateAppVersion());
     this.versionCheckerService.updateVersion();
   }
 
   checkVersion() {
-    // this.store.dispatch(new AppLayout.CheckVersion());
     this.appLayoutService.checkVersion();
     this.versionCheckerService.updateVersion();
   }
@@ -117,7 +103,6 @@ export class AppNavbarComponent implements OnInit {
   }
 
   changeTheme(theme) {
-    // this.store.dispatch(new AppLayout.ThemeChange(theme.value));
     this.appLayoutService.changeTheme(theme.value);
   }
 }

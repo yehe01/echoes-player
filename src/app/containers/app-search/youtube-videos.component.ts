@@ -1,10 +1,10 @@
-import { CSearchTypes } from '../../core/models/player-search';
+import { CSearchTypes } from './models/player-search';
 import { Component, OnInit } from '@angular/core';
 
-import { AppPlayerApi } from '../../core/api/app-player.api';
+import { AppService } from '../../core/services/app.service';
 
-import { PlayerSearchService } from '../../core/services/player-search.service';
-import { NowPlaylistService } from '../../core/services';
+import { PlayerSearchService } from './player-search.service';
+import { NowPlaylistService } from '../../features/now-playing';
 
 @Component({
   selector: 'youtube-videos',
@@ -21,27 +21,19 @@ import { NowPlaylistService } from '../../core/services';
   `
 })
 export class YoutubeVideosComponent implements OnInit {
-
-  // videos$ = this.store.let(getPlayerSearchResults$);
-  // loading$ = this.store.let(getIsSearching$);
-
   videos$ = this.playerSearchService.playerSearch$.map(search => search.results);
   loading$ = this.playerSearchService.playerSearch$.map(search => search.isSearching);
 
   playlistVideos$ = this.nowPlaylistService.playlist$.map(p => p.videos);
 
-  constructor(
-    private appPlayerApi: AppPlayerApi,
-    private nowPlaylistService: NowPlaylistService,
-    private playerSearchService: PlayerSearchService
-  ) {}
+  constructor(private appPlayerApi: AppService,
+              private nowPlaylistService: NowPlaylistService,
+              private playerSearchService: PlayerSearchService) {
+  }
 
   ngOnInit() {
-    // this.store.dispatch(this.playerSearchActions.updateSearchType(CSearchTypes.VIDEO));
     this.playerSearchService.updateSearchType(CSearchTypes.VIDEO);
 
-
-    // this.store.dispatch(this.playerSearchActions.searchCurrentQuery());
     this.playerSearchService.searchCurrentQuery();
   }
 

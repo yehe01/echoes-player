@@ -72,13 +72,6 @@ export class AppLayoutService {
   }
 
   checkVersion() {
-    // case ActionTypes.APP_CHECK_VERSION: {
-    //     const version = {
-    //       ...state.version,
-    //       checkingForVersion: true
-    //     };
-    //     return { ...state, version };
-    //   }
     const appSettings = this.appLayoutSubject.getValue();
     const version = {
       ...appSettings.version,
@@ -91,7 +84,6 @@ export class AppLayoutService {
   }
 
   toggleSidebar() {
-    // return { ...state, sidebarExpanded: !state.sidebarExpanded };
     const appSettings = this.appLayoutSubject.getValue();
 
     this.appLayoutSubject.next({
