@@ -5,7 +5,8 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { CSearchTypes } from '../../containers/app-search/models/player-search';
+
+import { CSearchTypes } from '../app-search/models/player-search';
 
 @Component({
   selector: 'app-navigator',

@@ -1,13 +1,19 @@
 import { VersionCheckerService } from './core/services';
 import { Component, HostBinding, OnInit } from '@angular/core';
 
-import 'rxjs/add/operator/let';
 import { AppLayoutService } from './core/services/app-layout.service';
 
 @Component({
   selector: 'body',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  template: `
+    <app-player class="navbar navbar-default navbar-fixed-bottom"></app-player>
+
+    <app-sidebar [class.closed]="sidebarCollapsed$ | async"></app-sidebar>
+
+    <div class="container-main">
+      <router-outlet></router-outlet>
+    </div>`
 })
 export class AppComponent implements OnInit {
   sidebarCollapsed$ = this.appLayoutService.appLayout$.map(layout => layout.sidebarExpanded);

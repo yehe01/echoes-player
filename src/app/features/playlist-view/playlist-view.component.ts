@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AppService } from '../../core/services/app.service';
-import { NowPlaylistService } from '../../features/now-playing';
+import { NowPlaylistService } from '../now-playing';
 
 export interface PlaylistData {
   videos: GoogleApiYouTubeVideoResource[];

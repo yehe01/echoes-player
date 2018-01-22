@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserProfile } from '../../../core/services';
 import { AppService } from '../../../core/services/app.service';
+import { UserProfile } from '../user-profile.service';
 
 @Component({
   selector: 'playlists',

@@ -1,16 +1,16 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar-user',
   template: `
     <a class="btn btn-link navbar-link navbar-btn"
-      *ngIf="signedIn; else userNotSignedIn"
-      [routerLink]="['/user']">
+       *ngIf="signedIn; else userNotSignedIn"
+       [routerLink]="['/user']">
       <img [src]="userImageUrl" class="user-icon">
     </a>
     <ng-template #userNotSignedIn>
       <span class="btn btn-link navbar-link navbar-btn"
-        (click)="handleSignIn()">
+            (click)="handleSignIn()">
         <i class="fa fa-sign-in"></i>
         Sign In
       </span>
@@ -25,7 +25,8 @@ export class AppNavbarUserComponent {
 
   @Output() signIn = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+  }
 
   handleSignIn() {
     this.signIn.emit();

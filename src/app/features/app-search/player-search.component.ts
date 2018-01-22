@@ -1,12 +1,9 @@
-import { Jsonp, Response, URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
-  NgZone,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,

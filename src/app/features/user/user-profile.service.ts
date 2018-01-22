@@ -6,9 +6,9 @@ import 'rxjs/add/operator/catch';
 import { of } from 'rxjs/observable/of';
 
 import { YoutubeApi } from '../../core/api/youtube-api';
-import { Authorization } from '../../core/services/authorization.service';
+import { Authorization } from '../../core/services';
 
-import { GoogleBasicProfile, IUserProfile } from './models/index';
+import { GoogleBasicProfile, IUserProfile } from './models';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
@@ -26,7 +26,7 @@ export class UserProfile {
   private userProfileSubject: BehaviorSubject<IUserProfile>;
 
   constructor(private zone: NgZone,
-              public youtubeApiService: YoutubeApi,
+              private youtubeApiService: YoutubeApi,
               private authorization: Authorization,
               private localStorage: AsyncLocalStorage) {
 

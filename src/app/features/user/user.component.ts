@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserProfile, Authorization } from '../../core/services';
+import { Authorization } from '../../core/services';
+import { UserProfile } from './user-profile.service';
 
 @Component({
   selector: 'app-user',

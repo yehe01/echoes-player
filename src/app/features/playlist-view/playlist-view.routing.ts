@@ -1,7 +1,7 @@
 import { PlaylistVideosResolver } from '../../core/resolvers/playlist-videos.resolver';
 import { PlaylistResolver } from '../../core/resolvers/playlist.resolver';
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { PlaylistViewComponent } from './playlist-view.component';
 

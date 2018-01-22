@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { IPresetParam } from './models/player-search';
 import { PlayerSearchService } from './player-search.service';
-import { UserProfile } from '../../core/services';
+import { UserProfile } from '../user/user-profile.service';
 
 @Component({
   selector: 'app-search',

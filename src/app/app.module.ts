@@ -8,12 +8,12 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core';
 import { SharedModule } from './shared';
 
-import { APP_CONTAINER_MODULES } from './containers';
 import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { APP_FEATURE_MODULES } from './features';
+import './rxjs-operators';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { APP_FEATURE_MODULES } from './features';
     CoreModule,
     SharedModule,
     ...APP_FEATURE_MODULES,
-    ...APP_CONTAINER_MODULES
   ],
   providers: [],
   bootstrap: [AppComponent]

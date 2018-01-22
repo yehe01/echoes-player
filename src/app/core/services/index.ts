@@ -1,4 +1,3 @@
-import { UserProfile } from '../../containers/user/user-profile.service';
 import { YoutubePlayerService } from './youtube-player.service';
 import { GapiLoader } from './gapi-loader.service';
 import { Authorization } from './authorization.service';
@@ -6,7 +5,6 @@ import { VersionCheckerService } from './version-checker.service';
 import { MediaParserService } from './media-parser.service';
 import { AppLayoutService } from './app-layout.service';
 
-export * from '../../containers/user/user-profile.service';
 export * from './youtube-player.service';
 export * from './gapi-loader.service';
 export * from './authorization.service';

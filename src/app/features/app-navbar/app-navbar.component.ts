@@ -3,8 +3,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { Authorization, UserProfile, VersionCheckerService } from '../../core/services';
+import { Authorization, VersionCheckerService } from '../../core/services';
 import { AppLayoutService } from '../../core/services/app-layout.service';
+import { UserProfile } from '../user/user-profile.service';
 
 @Component({
   selector: 'app-navbar',
