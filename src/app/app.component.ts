@@ -1,7 +1,7 @@
 import { VersionCheckerService } from './core/services';
 import { Component, HostBinding, OnInit } from '@angular/core';
 
-import { AppLayoutService } from './core/services/app-layout.service';
+import { AppLayoutService } from './core/services';
 
 @Component({
   selector: 'body',

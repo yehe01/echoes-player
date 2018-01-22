@@ -5,7 +5,7 @@ import { DEFAULT_THEME, Themes } from '../../app.themes';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 
-const INIT_STATE: IAppSettings = {
+export const INIT_STATE: IAppSettings = {
   sidebarExpanded: true,
   requestInProcess: false,
   version: {
@@ -63,7 +63,7 @@ export class AppLayoutService {
     return version;
   }
 
-  recievedAppVersion(payload: any) {
+  receivedAppVersion(payload: any) {
     const appSettings = this.appLayoutSubject.getValue();
     const version = AppLayoutService.getVersion(appSettings, payload);
     this.appLayoutSubject.next({

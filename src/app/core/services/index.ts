@@ -10,6 +10,7 @@ export * from './gapi-loader.service';
 export * from './authorization.service';
 export * from './version-checker.service';
 export * from './media-parser.service';
+export * from './app-layout.service';
 
 export const APP_SERVICES = [
   { provide: YoutubePlayerService, useClass: YoutubePlayerService },
